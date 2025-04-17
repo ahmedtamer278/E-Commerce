@@ -9,7 +9,7 @@
 
             try
             {
-                if (context.Set<ProductType>().Any())
+                if (!context.Set<ProductBrand>().Any())
                 {
                     // Read From File
                     var data = await File.ReadAllTextAsync(@"..\Infrastructure\Persistence\Data\Seeding\brands.json");
@@ -23,7 +23,7 @@
                     }
                 }
 
-                if (context.Set<ProductType>().Any())
+                if (!context.Set<ProductType>().Any())
                 {
                     // Read From File
                     var data = await File.ReadAllTextAsync(@"..\Infrastructure\Persistence\Data\Seeding\types.json");
@@ -37,7 +37,7 @@
                     }
                 }
 
-                if (context.Set<Product>().Any())
+                if (!context.Set<Product>().Any())
                 {
                     // Read From File
                     var data = await File.ReadAllTextAsync(@"..\Infrastructure\Persistence\Data\Seeding\products.json");

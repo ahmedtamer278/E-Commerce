@@ -6,6 +6,9 @@
         public void Add(TEntity entity)
             => context.Set<TEntity>().Add(entity);
 
+        public async Task<int> CountAsync(ISpecifications<TEntity> specifications) 
+            => await SpecificationsEvaluator.CreateQuery(context.Set<TEntity>(), specifications).CountAsync();
+
         public void Delete(TEntity entity)
             => context.Set<TEntity>().Remove(entity);
 

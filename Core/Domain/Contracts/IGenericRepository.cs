@@ -9,6 +9,7 @@ namespace Domain.Contracts
         void Delete(TEntity entity);
 
         Task<TEntity?> GetAsync(TKey key);
+        Task<int> CountAsync(ISpecifications<TEntity> specifications);
         Task<TEntity?> GetAsync(ISpecifications<TEntity> specifications);
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity> specifications);

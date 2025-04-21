@@ -1,15 +1,21 @@
-﻿using Services.Specifications;
+﻿using Domain.Exceptions;
+using Services.Specifications;
+using Shared.DataTransferObject;
 
 namespace Services
 {
     internal class ProductService (IUnitOfWork unitOfWork , IMapper mapper)
         : IProductService
     {
-        public async Task<IEnumerable<ProductResponse>> GetAllProductAsync(int? brandId, int? typeId, ProductSortingOptions options)
+        public async Task<PaginatedResponse<ProductResponse>> GetAllProductAsync(ProductQueryParameters queryParameters)
         {
-            var specifications = new ProductWithBrandAndTypeSpecifications(brandId,typeId,options);
+            var specifications = new ProductWithBrandAndTypeSpecifications(queryParameters);
             var product = await unitOfWork.GetRepository<Product, int>().GetAllAsync(specifications);
-            return mapper.Map<IEnumerable<Product>, IEnumerable<ProductResponse>>(product);
+            var data = mapper.Map<IEnumerable<Product>, IEnumerable<ProductResponse>>(product);
+           var pageCount = data.Count();
+            
+            var totalCount = await unitOfWork.GetRepository<Product, int>().CountAsync(new ProductCountSpecifications(queryParameters));
+            return new(queryParameters.PageIndex, pageCount, totalCount, data);
         }
 
         public async Task<IEnumerable<BrandResponse>> GetBrandsAsync()
@@ -23,7 +29,7 @@ namespace Services
         {
             var specifications = new ProductWithBrandAndTypeSpecifications(id);
 
-            var product = await unitOfWork.GetRepository<Product, int>().GetAsync(specifications);
+            var product = await unitOfWork.GetRepository<Product, int>().GetAsync(specifications)?? throw new ProductNotFoundException(id);
             return mapper.Map<Product ,ProductResponse>(product);
         }
 

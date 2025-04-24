@@ -1,8 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Persistence.Repositories;
-
-namespace Persistence
+﻿namespace Persistence
 {
     public static class InfrastructureServicesRegistration
     {
@@ -14,7 +10,12 @@ namespace Persistence
                 options.UseSqlServer(ConnectionString);
             });
             services.AddScoped<IDbInitializer, DbInitializer>();
+            services.AddSingleton<IConnectionMultiplexer>((_) =>
+            {
+               return ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnection")!);
+            });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IBasketRepository, BasketRepository>();
             return services;
         }
     }

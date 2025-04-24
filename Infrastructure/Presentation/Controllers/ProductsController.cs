@@ -1,14 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ServicesAbstractions;
-using Shared.DataTransferObject;
-using Shared.DataTransferObject.Products;
-
-namespace Presentation.Controllers
+﻿namespace Presentation.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    
     public class ProductsController (IServiceManager serviceManager)
-        : ControllerBase
+        : APIController
     {
         [HttpGet]
         public async Task<ActionResult<PaginatedResponse<ProductResponse>>> GetAllProduct([FromQuery]ProductQueryParameters queryParameters)

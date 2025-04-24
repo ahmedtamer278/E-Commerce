@@ -1,4 +1,6 @@
-﻿namespace Services.MappingProfiles
+﻿using Domain.Models.Products;
+
+namespace Services.MappingProfiles
 {
     internal class ProductProfile : Profile
     {

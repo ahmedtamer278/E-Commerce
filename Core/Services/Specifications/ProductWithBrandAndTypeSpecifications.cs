@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Domain.Models.Products;
 using Shared.DataTransferObject.Products;
 
 namespace Services.Specifications

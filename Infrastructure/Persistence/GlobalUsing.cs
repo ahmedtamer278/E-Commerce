@@ -14,3 +14,9 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Persistence.Repositories;
 global using Domain.Models.Basket;
 global  using StackExchange.Redis;
+global using Persistence.Identity;
+global using Microsoft.AspNetCore.Identity;
+global using Domain.Models.Identity;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
+

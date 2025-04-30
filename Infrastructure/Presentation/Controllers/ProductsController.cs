@@ -17,10 +17,11 @@
             var product = await serviceManager.ProductService.GetProductAsync(id);
             return Ok(product);
         }
-
+        //[Authorize(Roles = "Admin")]
         [HttpGet("brands")]
         public async Task<ActionResult<BrandResponse>> GetBrands()
         {
+            //var email = User.FindFirstValue(ClaimTypes.Email);
             var brands = await serviceManager.ProductService.GetBrandsAsync();
             return Ok(brands);
         }

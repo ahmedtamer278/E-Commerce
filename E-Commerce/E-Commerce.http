@@ -1,6 +1,6 @@
 @E_Commerce_HostAddress = http://localhost:5245
 
-GET {{E_Commerce_HostAddress}}/api/Products?PageIndex=4&PageSize=5
+POST {{E_Commerce_HostAddress}}/api/Authentication/login
 Accept: application/json
 
 ###

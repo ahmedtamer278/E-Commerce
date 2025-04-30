@@ -45,13 +45,21 @@ namespace E_Commerce.Middlewares
             };
             response.StatusCode = ex switch
             {
-                NotFoundException => (int)HttpStatusCode.NotFound,
-                _ => (int)HttpStatusCode.InternalServerError
+                NotFoundException => StatusCodes.Status404NotFound,
+                UnauthorizedException =>StatusCodes.Status401Unauthorized,
+                BadRequestException badRequestException => GetValidationErrors(badRequestException , response) ,
+                _ => StatusCodes.Status500InternalServerError
             };
             // return response as json
             //var jsonresult = JsonSerializer.Serialize(response);
             httpContext.Response.StatusCode = response.StatusCode;
             await httpContext.Response.WriteAsJsonAsync(response);
+        }
+
+        private static int GetValidationErrors(BadRequestException badRequestException, ErrorDetails response)
+        {
+            response.Errors = badRequestException.Errors;
+            return StatusCodes.Status400BadRequest;
         }
 
         private static async Task HandleNotFoundEndPointAsync(HttpContext httpContext)

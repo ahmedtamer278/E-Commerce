@@ -20,9 +20,9 @@ namespace E_Commerce
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
-            builder.Services.AddApplicationServices();
+            builder.Services.AddApplicationServices(builder.Configuration);
             builder.Services.AddInfrastructureServices(builder.Configuration);
-            builder.Services.AddWebApplicationServices();
+            builder.Services.AddWebApplicationServices(builder.Configuration);
             var app = builder.Build();
             await app.InitializeDataBaseAsync();
             app.UseCustomExceptionMiddleware();
@@ -34,7 +34,8 @@ namespace E_Commerce
             app.UseStaticFiles();
             app.UseHttpsRedirection();
 
-            //app.UseAuthorization();
+            app.UseAuthorization();
+            app.UseAuthentication();
 
 
             app.MapControllers();

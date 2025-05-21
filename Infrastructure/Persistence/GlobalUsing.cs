@@ -18,5 +18,7 @@ global using Persistence.Identity;
 global using Microsoft.AspNetCore.Identity;
 global using Domain.Models.Identity;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using Domain.Models.Orders;
+global using Order = Domain.Models.Orders.Order;
 
 

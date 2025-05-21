@@ -24,6 +24,19 @@ namespace Persistence
                         await context.SaveChangesAsync();
                     }
                 }
+                if (!context.Set<DeliveryMethod>().Any())
+                {
+                    // Read From File
+                    var data = await File.ReadAllTextAsync(@"..\Infrastructure\Persistence\Data\Seeding\delivery.json");
+                    // Convert to c# object [Deserilaize]
+                    var objects = JsonSerializer.Deserialize<List<DeliveryMethod>>(data);
+                    //Save to Db
+                    if (objects is not null && objects.Any())
+                    {
+                        context.Set<DeliveryMethod>().AddRange(objects);
+                        await context.SaveChangesAsync();
+                    }
+                }
 
                 if (!context.Set<ProductType>().Any())
                 {
@@ -57,10 +70,7 @@ namespace Persistence
             {
                 Console.WriteLine(ex.Message);
             }
-
-
         }
-
         public async Task InitializeIdentityAsync()
         {
             ///if ((await identityDbContext.Database.GetPendingMigrationsAsync()).Any())
